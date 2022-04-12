@@ -25,7 +25,7 @@ variable "ecs_desired_count" {
 
 variable "ecs_autoscaling_max_capacity" {
   type    = number
-  default = 3
+  default = 1
 }
 
 variable "ecs_autoscaling_min_capacity" {
@@ -67,11 +67,6 @@ variable "ecs_task_memory" {
   default = 512
 }
 
-variable "ecs_task_environment" {
-  type    = list(map(string))
-  default = [{}]
-}
-
 variable "ecs_memory_asg_target_value" {
   type    = number
   default = 80
@@ -100,4 +95,25 @@ variable "ecs_cpu_asg_scale_in_cooldown" {
 variable "ecs_cpu_asg_scale_out_cooldown" {
   type    = number
   default = 300
+}
+
+variable "twitter_integration_enabled" {
+  type    = bool
+  default = true
+}
+
+variable "twitter_consumer_key" {
+  type = string
+}
+
+variable "twitter_consumer_secret" {
+  type = string
+}
+
+variable "twitter_access_token" {
+  type = string
+}
+
+variable "twitter_access_token_secret" {
+  type = string
 }

@@ -1,15 +1,3 @@
-resource "aws_cloudwatch_log_group" "main" {
-  name = "/ecs/${var.project}-task-${var.environment}"
-}
-
-locals {
-  default_ecs_task_environment = [
-    { name : "SPRING_PROFILES_ACTIVE", value : "aws" }
-  ]
-
-  ecs_task_environment = length(var.ecs_task_environment) > 0 ? local.default_ecs_task_environment : concat(local.default_ecs_task_environment, var.ecs_task_environment)
-}
-
 resource "aws_ecs_task_definition" "main" {
   family                   = "${var.project}-task-${var.environment}"
   network_mode             = "awsvpc"
@@ -20,10 +8,17 @@ resource "aws_ecs_task_definition" "main" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   container_definitions    = jsonencode([
     {
-      name         = "${var.project}-container-${var.environment}"
-      image        = var.ecs_container_image
-      essential    = true
-      environment  = local.ecs_task_environment
+      name        = "${var.project}-container-${var.environment}"
+      image       = var.ecs_container_image
+      essential   = true
+      environment = [
+        { name : "SPRING_PROFILES_ACTIVE", value : "aws" },
+        { name : "INTEGRATION_TWITTER4J_ENABLED", value : tostring(var.twitter_integration_enabled) },
+        { name : "INTEGRATION_TWITTER4J_OAUTH_CONSUMERKEY", value : var.twitter_consumer_key },
+        { name : "INTEGRATION_TWITTER4J_OAUTH_CONSUMERSECRET", value : var.twitter_consumer_secret },
+        { name : "INTEGRATION_TWITTER4J_OAUTH_ACCESSTOKEN", value : var.twitter_access_token },
+        { name : "INTEGRATION_TWITTER4J_OAUTH_ACCESSTOKENSECRET", value : var.twitter_access_token_secret }
+      ]
       portMappings = [
         {
           protocol      = "tcp"

@@ -18,6 +18,10 @@ application on AWS. It creates an ECS Fargate cluster that runs the Dockerized S
 - Terraform
 - AWS CLI (configured for the correct AWS account)
 
+### Configuration
+
+- Configure all secret variables in `secrets.auto.tfvars.example` and rename the file to `secrets.auto.tfvars`.
+
 ### Deployment
 
 1. Initialize Terraform:

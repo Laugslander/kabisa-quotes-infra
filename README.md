@@ -18,22 +18,26 @@ application on AWS. It creates an ECS Fargate cluster that runs the Dockerized S
 - Terraform
 - AWS CLI (configured for the correct AWS account)
 
-### Configuration
-
-- Configure all secret variables in `secrets.auto.tfvars.example` and rename the file to `secrets.auto.tfvars`.
-
 ### Deployment
 
-1. Initialize Terraform:
+1. Select environment:
    ```
-   ./terraform-init
+   cd environments/<environment>/
    ```
 
-2. Apply Terraform:
+2. Configure all secret variables in `secrets.auto.tfvars.example` and rename the file to `secrets.auto.tfvars`.
+
+
+3. Initialize Terraform:
+   ```
+   ./terraform-init.sh
+   ```
+
+4. Apply Terraform:
    ```
    terraform apply
    ```
-3. Access the application by navigating to the `kabisa-quotes-service` output value.
+5. Access the application by navigating to the `kabisa-quotes-service` output value.
 
 ### Cleanup
 

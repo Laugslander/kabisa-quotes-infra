@@ -18,6 +18,10 @@ variable "public_subnet_ids" {
   type = list(string)
 }
 
+variable "private_subnet_ids" {
+  type = list(string)
+}
+
 variable "ecs_desired_count" {
   type    = number
   default = 1
